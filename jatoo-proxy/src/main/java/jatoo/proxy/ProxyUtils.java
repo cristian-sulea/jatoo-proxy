@@ -28,68 +28,68 @@ import java.net.InetSocketAddress;
  */
 public class ProxyUtils {
 
-	private static final String SYSTEM_PROPERTY_PROXY_SET = "proxySet";
-	private static final String SYSTEM_PROPERTY_PROXY_HOST = "proxyHost";
-	private static final String SYSTEM_PROPERTY_PROXY_PORT = "proxyPort";
+  private static final String SYSTEM_PROPERTY_PROXY_SET = "proxySet";
+  private static final String SYSTEM_PROPERTY_PROXY_HOST = "proxyHost";
+  private static final String SYSTEM_PROPERTY_PROXY_PORT = "proxyPort";
 
-	private static final String SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE = "true";
+  private static final String SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE = "true";
 
-	//
-	// set proxy
+  //
+  // set proxy
 
-	public static void setProxy(String host, int port, Authenticator authenticator) {
+  public static void setProxy(String host, int port, Authenticator authenticator) {
 
-		System.setProperty(SYSTEM_PROPERTY_PROXY_SET, SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE);
-		System.setProperty(SYSTEM_PROPERTY_PROXY_HOST, host);
-		System.setProperty(SYSTEM_PROPERTY_PROXY_PORT, Integer.toString(port));
+    System.setProperty(SYSTEM_PROPERTY_PROXY_SET, SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE);
+    System.setProperty(SYSTEM_PROPERTY_PROXY_HOST, host);
+    System.setProperty(SYSTEM_PROPERTY_PROXY_PORT, Integer.toString(port));
 
-		Authenticator.setDefault(authenticator);
-	}
+    Authenticator.setDefault(authenticator);
+  }
 
-	public static void setProxy(String host, int port, String username, char[] password) {
-		setProxy(host, port, new ProxyAuthenticator(username, password));
-	}
+  public static void setProxy(String host, int port, String username, char[] password) {
+    setProxy(host, port, new ProxyAuthenticator(username, password));
+  }
 
-	public static void setProxy(String host, int port, String username, String password) {
-		setProxy(host, port, new ProxyAuthenticator(username, password.toCharArray()));
-	}
+  public static void setProxy(String host, int port, String username, String password) {
+    setProxy(host, port, new ProxyAuthenticator(username, password.toCharArray()));
+  }
 
-	public static void setProxy(String host, int port) {
-		setProxy(host, port, null);
-	}
+  public static void setProxy(String host, int port) {
+    setProxy(host, port, null);
+  }
 
-	public static void setProxy(InetSocketAddress proxy, String username, String password) {
-		setProxy(proxy.getHostName(), proxy.getPort(), new ProxyAuthenticator(username, password.toCharArray()));
-	}
+  public static void setProxy(InetSocketAddress proxy, String username, String password) {
+    setProxy(proxy.getHostName(), proxy.getPort(), new ProxyAuthenticator(username, password.toCharArray()));
+  }
 
-	public static void setProxy(InetSocketAddress proxy) {
-		setProxy(proxy.getHostName(), proxy.getPort(), null);
-	}
+  public static void setProxy(InetSocketAddress proxy) {
+    setProxy(proxy.getHostName(), proxy.getPort(), null);
+  }
 
-	/**
-	 * Checks if a proxy have been set.
-	 */
-	public boolean isProxySet() {
+  /**
+   * Checks if a proxy have been set.
+   */
+  public boolean isProxySet() {
 
-		boolean isProxySet = true;
+    boolean isProxySet = true;
 
-		isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_SET) != null);
-		isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_HOST) != null);
-		isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_PORT) != null);
+    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_SET) != null);
+    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_HOST) != null);
+    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_PORT) != null);
 
-		return isProxySet;
-	}
+    return isProxySet;
+  }
 
-	/**
-	 * Removes any previously proxy set.
-	 */
-	public static void removeProxy() {
+  /**
+   * Removes any previously proxy set.
+   */
+  public static void removeProxy() {
 
-		System.getProperties().remove(SYSTEM_PROPERTY_PROXY_SET);
-		System.getProperties().remove(SYSTEM_PROPERTY_PROXY_HOST);
-		System.getProperties().remove(SYSTEM_PROPERTY_PROXY_PORT);
+    System.getProperties().remove(SYSTEM_PROPERTY_PROXY_SET);
+    System.getProperties().remove(SYSTEM_PROPERTY_PROXY_HOST);
+    System.getProperties().remove(SYSTEM_PROPERTY_PROXY_PORT);
 
-		Authenticator.setDefault(null);
-	}
+    Authenticator.setDefault(null);
+  }
 
 }

@@ -28,15 +28,15 @@ import java.net.PasswordAuthentication;
  */
 class ProxyAuthenticator extends Authenticator {
 
-	private final PasswordAuthentication passwordAuthentication;
+  private final PasswordAuthentication passwordAuthentication;
 
-	ProxyAuthenticator(String username, char[] password) {
-		passwordAuthentication = new PasswordAuthentication(username, password);
-	}
+  ProxyAuthenticator(String username, char[] password) {
+    passwordAuthentication = new PasswordAuthentication(username, password);
+  }
 
-	@Override
-	protected PasswordAuthentication getPasswordAuthentication() {
-		return passwordAuthentication;
-	}
+  @Override
+  protected PasswordAuthentication getPasswordAuthentication() {
+    return passwordAuthentication;
+  }
 
 }
