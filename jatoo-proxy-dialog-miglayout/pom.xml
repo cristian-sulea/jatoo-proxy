@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+
+	<parent>
+		<groupId>jatoo</groupId>
+		<artifactId>jatoo</artifactId>
+		<relativePath>../../jatoo/jatoo/pom.xml</relativePath>
+		<version>3.0</version>
+	</parent>
+
+
+	<artifactId>jatoo-proxy-dialog-miglayout</artifactId>
+
+
+	<name>JaToo :: Proxy :: Dialog :: MigLayout</name>
+	<description></description>
+
+	<url>http://cristian.sulea.net/projects/jatoo-proxy/</url>
+
+	<inceptionYear>2014</inceptionYear>
+
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/licenses/lgpl.txt</url>
+		</license>
+	</licenses>
+
+
+	<developers>
+		<developer>
+			<id>cristian.sulea</id>
+			<name>Cristian Sulea</name>
+			<email>cristian.sulea.79@gmail.com</email>
+			<url>http://cristian.sulea.net</url>
+			<roles>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+3</timezone>
+		</developer>
+	</developers>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>jatoo</groupId>
+			<artifactId>jatoo-proxy-dialog</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-swing</artifactId>
+			<version>${dependency.version.miglayout}</version>
+		</dependency>
+
+	</dependencies>
+
+
+</project>
