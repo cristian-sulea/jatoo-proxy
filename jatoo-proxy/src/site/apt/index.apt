@@ -9,8 +9,10 @@
 JaToo :: Proxy
 
 	JaToo :: Proxy is a handy, tiny and Open Source component created to ease the work with Internet proxies in Java.
-	
-	For example, you can make your Java application work over a specific proxy with a single line of code:
+
+Usage
+
+	Any Java application can be made to work over a specific proxy with a single line of code:
 
 +--
 ProxyUtils.setProxy(host, port, username, password);
