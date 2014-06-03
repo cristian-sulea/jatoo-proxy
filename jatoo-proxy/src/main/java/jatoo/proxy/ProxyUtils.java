@@ -75,9 +75,9 @@ public final class ProxyUtils {
 
     boolean isProxySet = true;
 
-    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_SET) != null);
-    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_HOST) != null);
-    isProxySet = isProxySet && (System.getProperty(SYSTEM_PROPERTY_PROXY_PORT) != null);
+    isProxySet = isProxySet && System.getProperty(SYSTEM_PROPERTY_PROXY_SET) != null;
+    isProxySet = isProxySet && System.getProperty(SYSTEM_PROPERTY_PROXY_HOST) != null;
+    isProxySet = isProxySet && System.getProperty(SYSTEM_PROPERTY_PROXY_PORT) != null;
 
     return isProxySet;
   }
