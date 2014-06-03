@@ -21,19 +21,36 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
 /**
- * Proxy Authenticator
+ * {@link Authenticator} implementation used by {@link ProxyUtils}.
  * 
  * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 1.0, November 29, 2013
+ * @version 1.1, June 3, 2014
  */
 class ProxyAuthenticator extends Authenticator {
 
-  private final PasswordAuthentication passwordAuthentication;
+  /**
+   * Username and password holder.
+   */
+  private PasswordAuthentication passwordAuthentication;
 
-  ProxyAuthenticator(String username, char[] password) {
+  /**
+   * Creates a new {@link ProxyAuthenticator} object with the provided username
+   * and password.
+   * 
+   * @param username
+   *          proxy username
+   * @param password
+   *          proxy password
+   */
+  ProxyAuthenticator(final String username, final char[] password) {
     passwordAuthentication = new PasswordAuthentication(username, password);
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.net.Authenticator#getPasswordAuthentication()
+   */
   @Override
   protected PasswordAuthentication getPasswordAuthentication() {
     return passwordAuthentication;

@@ -24,9 +24,9 @@ import java.net.InetSocketAddress;
  * A collection of utility methods to ease the work with proxies.
  * 
  * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 3.0, May 6, 2014
+ * @version 3.1, June 3, 2014
  */
-public class ProxyUtils {
+public final class ProxyUtils {
 
   private static final String SYSTEM_PROPERTY_PROXY_SET = "proxySet";
   private static final String SYSTEM_PROPERTY_PROXY_HOST = "proxyHost";
@@ -34,10 +34,9 @@ public class ProxyUtils {
 
   private static final String SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE = "true";
 
-  //
-  // set proxy
+  private ProxyUtils() {}
 
-  public static void setProxy(String host, int port, Authenticator authenticator) {
+  public static void setProxy(final String host, final int port, final Authenticator authenticator) {
 
     System.setProperty(SYSTEM_PROPERTY_PROXY_SET, SYSTEM_PROPERTY_PROXY_SET_VALUE_TRUE);
     System.setProperty(SYSTEM_PROPERTY_PROXY_HOST, host);
@@ -46,30 +45,33 @@ public class ProxyUtils {
     Authenticator.setDefault(authenticator);
   }
 
-  public static void setProxy(String host, int port, String username, char[] password) {
+  public static void setProxy(final String host, final int port, final String username, final char[] password) {
     setProxy(host, port, new ProxyAuthenticator(username, password));
   }
 
-  public static void setProxy(String host, int port, String username, String password) {
+  public static void setProxy(final String host, final int port, final String username, final String password) {
     setProxy(host, port, new ProxyAuthenticator(username, password.toCharArray()));
   }
 
-  public static void setProxy(String host, int port) {
+  public static void setProxy(final String host, final int port) {
     setProxy(host, port, null);
   }
 
-  public static void setProxy(InetSocketAddress proxy, String username, String password) {
+  public static void setProxy(final InetSocketAddress proxy, final String username, final String password) {
     setProxy(proxy.getHostName(), proxy.getPort(), new ProxyAuthenticator(username, password.toCharArray()));
   }
 
-  public static void setProxy(InetSocketAddress proxy) {
+  public static void setProxy(final InetSocketAddress proxy) {
     setProxy(proxy.getHostName(), proxy.getPort(), null);
   }
 
   /**
    * Checks if a proxy have been set.
+   * 
+   * @return <code>true</code> if a proxy have been set, <code>false</code>
+   *         otherwise (or if {@link #removeProxy()} have been used)
    */
-  public boolean isProxySet() {
+  public static boolean isProxySet() {
 
     boolean isProxySet = true;
 
