@@ -27,7 +27,7 @@ import javax.swing.UIManager;
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
  * @version 2.1, June 4, 2014
  */
-public class ProxySettingsDialogMigLayoutTest {
+public class MigLayoutProxyDialogTest {
 
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
