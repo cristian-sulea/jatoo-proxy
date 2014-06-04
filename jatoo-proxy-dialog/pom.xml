@@ -15,7 +15,7 @@
 
 
 	<name>JaToo :: Proxy :: Dialog</name>
-	<description></description>
+	<description>A helper project for JaToo :: Proxy to ease the Internet proxy configuration through a dialog.</description>
 
 	<url>http://cristian.sulea.net/projects/jatoo-proxy/</url>
 

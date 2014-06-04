@@ -17,25 +17,25 @@
 
 package jatoo.proxy.dialog.impl;
 
-import jatoo.proxy.dialog.ProxySettingsPanel;
-import jatoo.proxy.dialog.ProxySettingsPanelFactory;
+import jatoo.proxy.dialog.ProxyDialogPanel;
+import jatoo.proxy.dialog.ProxyDialogPanelFactory;
 
 /**
- * Default implementation for {@link ProxySettingsPanelFactory}.
+ * Default implementation for {@link ProxyDialogPanelFactory}.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 1.0, May 7, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 2.0, June 4, 2014
  */
-public class ProxySettingsPanelFactoryImpl implements ProxySettingsPanelFactory {
+public class DefaultProxySettingsPanelFactory implements ProxyDialogPanelFactory {
 
-	@Override
-	public int getPriority() {
-		return 0;
-	}
+  @Override
+  public int getPriority() {
+    return 0;
+  }
 
-	@Override
-	public ProxySettingsPanel createProxySettingsPanel() {
-		return new ProxySettingsPanelImpl();
-	}
+  @Override
+  public ProxyDialogPanel createDialogPanel() {
+    return new DefaultProxySettingsPanel();
+  }
 
 }

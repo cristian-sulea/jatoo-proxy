@@ -18,15 +18,16 @@
 package jatoo.proxy.dialog;
 
 /**
- * {@link ProxySettingsPanel} factory.
+ * This interface represents the factory used by {@link ProxyDialog} to create
+ * dialog panels.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 1.0, May 7, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 2.0, June 4, 2014
  */
-public interface ProxySettingsPanelFactory {
+public interface ProxyDialogPanelFactory {
 
-	int getPriority();
+  int getPriority();
 
-	ProxySettingsPanel createProxySettingsPanel();
+  ProxyDialogPanel createDialogPanel();
 
 }

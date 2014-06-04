@@ -20,36 +20,36 @@ package jatoo.proxy.dialog;
 import javax.swing.JPanel;
 
 /**
- * {@link ProxySettingsDialog} panel.
+ * The panel used by {@link ProxyDialog} to layout the graphical components.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 2.0, May 8, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 3.0, June 4, 2014
  */
 @SuppressWarnings("serial")
-public abstract class ProxySettingsPanel extends JPanel {
+public abstract class ProxyDialogPanel extends JPanel {
 
-	public abstract boolean isProxyEnabled();
+  public abstract boolean isProxyEnabled();
 
-	public abstract void setProxyEnabled(boolean enabled);
+  public abstract void setProxyEnabled(boolean enabled);
 
-	public abstract String getHost();
+  public abstract String getHost();
 
-	public abstract void setHost(String host);
+  public abstract void setHost(String host);
 
-	public abstract int getPort();
+  public abstract int getPort();
 
-	public abstract void setPort(int port);
+  public abstract void setPort(int port);
 
-	public abstract boolean isProxyRequiringAuthentication();
+  public abstract boolean isProxyRequiringAuthentication();
 
-	public abstract void setProxyRequiringAuthentication(boolean requiringAuthentication);
+  public abstract void setProxyRequiringAuthentication(boolean requiringAuthentication);
 
-	public abstract String getUsername();
+  public abstract String getUsername();
 
-	public abstract void setUsername(String username);
+  public abstract void setUsername(String username);
 
-	public abstract String getPassword();
+  public abstract String getPassword();
 
-	public abstract void setPassword(String password);
+  public abstract void setPassword(String password);
 
 }
