@@ -17,25 +17,35 @@
 
 package jatoo.proxy.dialog.miglayout;
 
-import jatoo.proxy.dialog.ProxySettingsPanel;
-import jatoo.proxy.dialog.ProxySettingsPanelFactory;
+import jatoo.proxy.dialog.ProxyDialogPanel;
+import jatoo.proxy.dialog.ProxyDialogPanelFactory;
 
 /**
- * MigLayout implementation for {@link ProxySettingsPanelFactory}.
+ * MigLayout implementation for {@link ProxyDialogPanelFactory}.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 1.0, May 7, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 2.0, June 4, 2014
  */
-public class ProxySettingsPanelFactoryMigLayout implements ProxySettingsPanelFactory {
+public class MigLayoutProxyDialogPanelFactory implements ProxyDialogPanelFactory {
 
-	@Override
-	public int getPriority() {
-		return 100;
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see jatoo.proxy.dialog.ProxyDialogPanelFactory#getPriority()
+   */
+  @Override
+  public int getPriority() {
+    return 100;
+  }
 
-	@Override
-	public ProxySettingsPanel createProxySettingsPanel() {
-		return new ProxySettingsPanelMigLayout();
-	}
+  /*
+   * (non-Javadoc)
+   * 
+   * @see jatoo.proxy.dialog.ProxyDialogPanelFactory#createDialogPanel()
+   */
+  @Override
+  public ProxyDialogPanel createDialogPanel() {
+    return new MigLayoutProxyDialogPanel();
+  }
 
 }

@@ -17,21 +17,21 @@
 
 package jatoo.proxy.dialog.miglayout;
 
-import jatoo.proxy.dialog.ProxySettingsDialog;
+import jatoo.proxy.dialog.ProxyDialog;
 
 import javax.swing.UIManager;
 
 /**
- * {@link ProxySettingsDialog} test class.
+ * {@link ProxyDialog} test class.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 2.0, May 8, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 2.1, June 4, 2014
  */
 public class ProxySettingsDialogMigLayoutTest {
 
-	public static void main(String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		ProxySettingsDialog.show();
-	}
+  public static void main(String[] args) throws Exception {
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    ProxyDialog.show();
+  }
 
 }
