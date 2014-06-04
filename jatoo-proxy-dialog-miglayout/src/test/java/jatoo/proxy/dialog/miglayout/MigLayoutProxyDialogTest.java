@@ -17,6 +17,7 @@
 
 package jatoo.proxy.dialog.miglayout;
 
+import jatoo.proxy.ProxyUtils;
 import jatoo.proxy.dialog.ProxyDialog;
 
 import javax.swing.UIManager;
@@ -31,7 +32,9 @@ public class MigLayoutProxyDialogTest {
 
   public static void main(String[] args) throws Exception {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    ProxyDialog.show();
+
+    // ProxyDialog.show();
+    ProxyUtils.showDialog();
   }
 
 }

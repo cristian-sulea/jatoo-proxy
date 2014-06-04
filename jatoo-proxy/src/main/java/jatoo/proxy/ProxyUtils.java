@@ -17,6 +17,8 @@
 
 package jatoo.proxy;
 
+import java.awt.Component;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
 
@@ -24,7 +26,7 @@ import java.net.InetSocketAddress;
  * A collection of utility methods to ease the work with proxies.
  * 
  * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 3.1, June 3, 2014
+ * @version 4, June 4, 2014
  */
 public final class ProxyUtils {
 
@@ -92,6 +94,54 @@ public final class ProxyUtils {
     System.getProperties().remove(SYSTEM_PROPERTY_PROXY_PORT);
 
     Authenticator.setDefault(null);
+  }
+
+  /**
+   * A shortcut for <code>jatoo.proxy.dialog.ProxyDialog#show()</code> method.
+   * If <code>jatoo-proxy-dialog</code> is not in classpath then a
+   * {@link RuntimeException} is thrown.
+   * 
+   * @throws UnsupportedOperationException
+   *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
+   *           invocation fails
+   */
+  public static void showDialog() {
+
+    try {
+      Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show").invoke(null);
+    }
+
+    catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+      throw new UnsupportedOperationException("failed to invoke #show() method", e);
+    }
+
+    catch (ClassNotFoundException e) {
+      throw new UnsupportedOperationException("jatoo-proxy-dialog is not in classpath", e);
+    }
+  }
+
+  /**
+   * A shortcut for <code>jatoo.proxy.dialog.ProxyDialog#show(Component)</code>
+   * method. If <code>jatoo-proxy-dialog</code> is not in classpath then a
+   * {@link RuntimeException} is thrown.
+   * 
+   * @throws UnsupportedOperationException
+   *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
+   *           invocation fails
+   */
+  public static void showDialog(Component owner) {
+
+    try {
+      Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show", Component.class).invoke(null, owner);
+    }
+
+    catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+      throw new UnsupportedOperationException("failed to invoke #show(owner) method", e);
+    }
+
+    catch (ClassNotFoundException e) {
+      throw new UnsupportedOperationException("jatoo-proxy-dialog is not in classpath", e);
+    }
   }
 
 }

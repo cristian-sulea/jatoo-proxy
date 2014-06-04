@@ -17,6 +17,8 @@
 
 package jatoo.proxy.dialog;
 
+import jatoo.proxy.ProxyUtils;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +35,7 @@ import javax.swing.UIManager;
  * {@link ProxyDialog} test class.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 3.0, June 4, 2014
+ * @version 3.1, June 4, 2014
  */
 public class ProxyDialogTest {
 
@@ -47,7 +49,7 @@ public class ProxyDialogTest {
     final JButton proxyButton = new JButton("Proxy Settings");
     proxyButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ev) {
-        ProxyDialog.show(proxyButton);
+        ProxyUtils.showDialog(proxyButton);
       }
     });
 
@@ -84,7 +86,7 @@ public class ProxyDialogTest {
 
     frame.setVisible(true);
 
-    ProxyDialog.show(proxyButton);
+    ProxyUtils.showDialog(proxyButton);
   }
 
 }
