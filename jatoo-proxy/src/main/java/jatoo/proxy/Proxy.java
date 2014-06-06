@@ -43,6 +43,10 @@ import javax.xml.bind.DatatypeConverter;
 public class Proxy {
 
   private static final File STORE_FILE = new File(new File(new File(System.getProperty("user.home")), ".jatoo"), "proxy.properties");
+  static {
+    STORE_FILE.getParentFile().mkdirs();
+  }
+
   private static final String STORE_FILE_ENABLED = "enabled";
   private static final String STORE_FILE_HOST = "host";
   private static final String STORE_FILE_PORT = "port";
