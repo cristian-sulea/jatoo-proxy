@@ -17,40 +17,51 @@
 
 package jatoo.proxy;
 
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.io.File;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ProxyTest {
 
-	@Test
-	public void test() throws Throwable {
+  @Test
+  public void test() throws Exception {
 
-		//
-		// set proxy and everything should be ok
+    //
+    // P1 (define)
 
-		ProxyUtils.setProxy("192.168.1.29", 8080, "csu", new String(new byte[] { 48, 48, 55, 46, 99, 115, 117, 46, 116, 53, 51, 48 }));
+    Proxy proxy1 = new Proxy("host", 8080, "username", "password");
 
-		URLConnection connection = new URL("https://www.google.com").openConnection();
-		connection.setConnectTimeout(3000);
-		connection.getInputStream().close();
+    //
+    // P2 (store)
 
-		//
-		// remove proxy and only SocketTimeoutException is accepted
+    Proxy proxy2 = new Proxy();
+    proxy2.setStoreFile(new File("target/proxy.properties"));
 
-		ProxyUtils.removeProxy();
+    proxy2.setEnabled(proxy1.isEnabled());
 
-		try {
-			checkConnection();
-		} catch (SocketTimeoutException e) {}
-	}
+    proxy2.setHost(proxy1.getHost());
+    proxy2.setPort(proxy1.getPort());
 
-	private void checkConnection() throws Throwable {
-		URLConnection connection = new URL("https://www.google.com").openConnection();
-		connection.setConnectTimeout(3000);
-		connection.getInputStream().close();
-	}
+    proxy2.setRequiringAuthentication(proxy1.isRequiringAuthentication());
+    proxy2.setUsername(proxy1.getUsername());
+    proxy2.setPassword(proxy1.getPassword());
+
+    proxy2.store();
+
+    //
+    // P3 (load)
+
+    Proxy proxy3 = new Proxy();
+    proxy3.setStoreFile(proxy2.getStoreFile());
+    proxy3.load();
+
+    //
+    // asserts
+
+    Assert.assertEquals(proxy1.getPassword(), proxy2.getPassword());
+    Assert.assertEquals(proxy2.getPassword(), proxy3.getPassword());
+    Assert.assertEquals(proxy3.getPassword(), proxy1.getPassword());
+  }
 
 }

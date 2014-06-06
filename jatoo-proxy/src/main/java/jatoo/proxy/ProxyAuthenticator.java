@@ -23,7 +23,7 @@ import java.net.PasswordAuthentication;
 /**
  * {@link Authenticator} implementation used by {@link ProxyUtils}.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
  * @version 1.1, June 3, 2014
  */
 class ProxyAuthenticator extends Authenticator {

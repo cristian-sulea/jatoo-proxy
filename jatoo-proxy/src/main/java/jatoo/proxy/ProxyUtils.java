@@ -18,15 +18,18 @@
 package jatoo.proxy;
 
 import java.awt.Component;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
+import java.security.GeneralSecurityException;
 
 /**
  * A collection of utility methods to ease the work with proxies.
  * 
- * @author Cristian Sulea ( http://cristian.sulea.net )
- * @version 4, June 4, 2014
+ * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
+ * @version 5.0, June 5, 2014
  */
 public final class ProxyUtils {
 
@@ -65,6 +68,32 @@ public final class ProxyUtils {
 
   public static void setProxy(final InetSocketAddress proxy) {
     setProxy(proxy.getHostName(), proxy.getPort(), null);
+  }
+
+  public static void setAndStoreProxy(final String host, final int port, final String username, final String password) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+    setProxy(host, port, username, password);
+    new Proxy(host, port, username, password).store();
+  }
+
+  public static void setAndStoreProxy(final String host, final int port, final String username, final char[] password) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+    setAndStoreProxy(host, port, username, new String(password));
+  }
+
+  public static void setLastStoredProxy() throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+
+    Proxy proxy = new Proxy();
+    proxy.load();
+
+    if (proxy.isEnabled()) {
+
+      if (proxy.isRequiringAuthentication()) {
+        setProxy(proxy.getHost(), proxy.getPort(), proxy.getUsername(), proxy.getPassword());
+      }
+
+      else {
+        setProxy(proxy.getHost(), proxy.getPort());
+      }
+    }
   }
 
   /**
