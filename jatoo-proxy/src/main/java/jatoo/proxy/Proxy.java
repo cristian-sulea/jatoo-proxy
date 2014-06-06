@@ -38,7 +38,7 @@ import javax.xml.bind.DatatypeConverter;
  * storing and decrypted after loading.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 1.0, June 5, 2014
+ * @version 1.1, June 6, 2014
  */
 public class Proxy {
 
@@ -72,7 +72,7 @@ public class Proxy {
 
   public Proxy() {}
 
-  public Proxy(boolean enabled, String host, int port, boolean requiringAuthentication, String username, String password) {
+  public Proxy(final boolean enabled, final String host, final int port, final boolean requiringAuthentication, final String username, final String password) {
     this.enabled = enabled;
     this.host = host;
     this.port = port;
@@ -81,15 +81,23 @@ public class Proxy {
     this.password = password;
   }
 
-  public Proxy(String host, int port, String username, String password) {
+  public Proxy(final String host, final int port, final String username, final String password) {
     this(true, host, port, true, username, password);
   }
 
-  public Proxy(String host, int port) {
+  public Proxy(final String host, final int port) {
     this(true, host, port, false, null, null);
   }
 
-  public synchronized void store() throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+  /**
+   * Stores the properties of this business object into the store file.
+   * 
+   * @throws GeneralSecurityException
+   *           if the encryption fails
+   * @throws IOException
+   *           if writing to the store file fails
+   */
+  public final synchronized void store() throws GeneralSecurityException, IOException {
 
     Properties p = new Properties();
 
@@ -110,7 +118,15 @@ public class Proxy {
     p.storeToXML(new FileOutputStream(storeFile), null);
   }
 
-  public synchronized void load() throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+  /**
+   * Loads the stored properties into this business object.
+   * 
+   * @throws GeneralSecurityException
+   *           if the decryption fails
+   * @throws IOException
+   *           if reading from the store file fails
+   */
+  public final synchronized void load() throws GeneralSecurityException, IOException {
 
     Properties p = new Properties();
     p.loadFromXML(new FileInputStream(storeFile));
@@ -139,10 +155,8 @@ public class Proxy {
    * 
    * @throws GeneralSecurityException
    *           if the encryption fails
-   * @throws UnsupportedEncodingException
-   *           if the {@link #CRYPTO_CHARSET} is not supported
    */
-  private String encrypt(String string) throws GeneralSecurityException, UnsupportedEncodingException {
+  private String encrypt(final String string) throws GeneralSecurityException {
 
     MessageDigest digest = MessageDigest.getInstance(CRYPTO_DIGEST_ALGORITHM);
     digest.update(CRYPTO_DIGEST_UPDATE_INPUT);
@@ -152,7 +166,15 @@ public class Proxy {
     Cipher cipher = Cipher.getInstance(CRYPTO_CIPHER_TRANSFORMATION);
     cipher.init(Cipher.ENCRYPT_MODE, key);
 
-    byte[] encryptedData = cipher.doFinal(string.getBytes(CRYPTO_CHARSET));
+    byte[] input;
+
+    try {
+      input = string.getBytes(CRYPTO_CHARSET);
+    } catch (UnsupportedEncodingException e) {
+      throw new GeneralSecurityException("the " + CRYPTO_CHARSET + " charset is not supported", e);
+    }
+
+    byte[] encryptedData = cipher.doFinal(input);
 
     return DatatypeConverter.printBase64Binary(encryptedData);
   }
@@ -167,10 +189,8 @@ public class Proxy {
    * 
    * @throws GeneralSecurityException
    *           if the decryption fails
-   * @throws UnsupportedEncodingException
-   *           if the {@link #CRYPTO_CHARSET} is not supported
    */
-  private String decrypt(String string) throws GeneralSecurityException, UnsupportedEncodingException {
+  private String decrypt(final String string) throws GeneralSecurityException {
 
     MessageDigest digest = MessageDigest.getInstance(CRYPTO_DIGEST_ALGORITHM);
     digest.update(CRYPTO_DIGEST_UPDATE_INPUT);
@@ -182,13 +202,17 @@ public class Proxy {
 
     byte[] decryptedData = cipher.doFinal(DatatypeConverter.parseBase64Binary(string));
 
-    return new String(decryptedData, CRYPTO_CHARSET);
+    try {
+      return new String(decryptedData, CRYPTO_CHARSET);
+    } catch (UnsupportedEncodingException e) {
+      throw new GeneralSecurityException("the " + CRYPTO_CHARSET + " charset is not supported", e);
+    }
   }
 
   /**
    * @return the storeFile
    */
-  public File getStoreFile() {
+  public final File getStoreFile() {
     return storeFile;
   }
 
@@ -196,14 +220,14 @@ public class Proxy {
    * @param storeFile
    *          the storeFile to set
    */
-  public void setStoreFile(File storeFile) {
+  public final void setStoreFile(final File storeFile) {
     this.storeFile = storeFile;
   }
 
   /**
    * @return the enabled
    */
-  public boolean isEnabled() {
+  public final boolean isEnabled() {
     return enabled;
   }
 
@@ -211,14 +235,14 @@ public class Proxy {
    * @param enabled
    *          the enabled to set
    */
-  public void setEnabled(boolean enabled) {
+  public final void setEnabled(final boolean enabled) {
     this.enabled = enabled;
   }
 
   /**
    * @return the host
    */
-  public String getHost() {
+  public final String getHost() {
     return host;
   }
 
@@ -226,14 +250,14 @@ public class Proxy {
    * @param host
    *          the host to set
    */
-  public void setHost(String host) {
+  public final void setHost(final String host) {
     this.host = host;
   }
 
   /**
    * @return the port
    */
-  public int getPort() {
+  public final int getPort() {
     return port;
   }
 
@@ -241,14 +265,14 @@ public class Proxy {
    * @param port
    *          the port to set
    */
-  public void setPort(int port) {
+  public final void setPort(final int port) {
     this.port = port;
   }
 
   /**
    * @return the requiringAuthentication
    */
-  public boolean isRequiringAuthentication() {
+  public final boolean isRequiringAuthentication() {
     return requiringAuthentication;
   }
 
@@ -256,14 +280,14 @@ public class Proxy {
    * @param requiringAuthentication
    *          the requiringAuthentication to set
    */
-  public void setRequiringAuthentication(boolean requiringAuthentication) {
+  public final void setRequiringAuthentication(final boolean requiringAuthentication) {
     this.requiringAuthentication = requiringAuthentication;
   }
 
   /**
    * @return the username
    */
-  public String getUsername() {
+  public final String getUsername() {
     return username;
   }
 
@@ -271,14 +295,14 @@ public class Proxy {
    * @param username
    *          the username to set
    */
-  public void setUsername(String username) {
+  public final void setUsername(final String username) {
     this.username = username;
   }
 
   /**
    * @return the password
    */
-  public String getPassword() {
+  public final String getPassword() {
     return password;
   }
 
@@ -286,7 +310,7 @@ public class Proxy {
    * @param password
    *          the password to set
    */
-  public void setPassword(String password) {
+  public final void setPassword(final String password) {
     this.password = password;
   }
 

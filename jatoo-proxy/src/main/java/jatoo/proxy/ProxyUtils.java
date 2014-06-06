@@ -19,7 +19,6 @@ package jatoo.proxy;
 
 import java.awt.Component;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
@@ -29,7 +28,7 @@ import java.security.GeneralSecurityException;
  * A collection of utility methods to ease the work with proxies.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 5.0, June 5, 2014
+ * @version 5.1, June 6, 2014
  */
 public final class ProxyUtils {
 
@@ -70,16 +69,16 @@ public final class ProxyUtils {
     setProxy(proxy.getHostName(), proxy.getPort(), null);
   }
 
-  public static void setAndStoreProxy(final String host, final int port, final String username, final String password) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+  public static void setAndStoreProxy(final String host, final int port, final String username, final String password) throws GeneralSecurityException, IOException {
     setProxy(host, port, username, password);
     new Proxy(host, port, username, password).store();
   }
 
-  public static void setAndStoreProxy(final String host, final int port, final String username, final char[] password) throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+  public static void setAndStoreProxy(final String host, final int port, final String username, final char[] password) throws GeneralSecurityException, IOException {
     setAndStoreProxy(host, port, username, new String(password));
   }
 
-  public static void setLastStoredProxy() throws GeneralSecurityException, UnsupportedEncodingException, IOException {
+  public static void setLastStoredProxy() throws GeneralSecurityException, IOException {
 
     Proxy proxy = new Proxy();
     proxy.load();
@@ -134,7 +133,7 @@ public final class ProxyUtils {
    *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
    *           invocation fails
    */
-  public static void showDialog() {
+  public static void showDialog() throws UnsupportedOperationException {
 
     try {
       Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show").invoke(null);
@@ -154,11 +153,14 @@ public final class ProxyUtils {
    * method. If <code>jatoo-proxy-dialog</code> is not in classpath then a
    * {@link RuntimeException} is thrown.
    * 
+   * @param owner
+   *          the {@code Component} from which the dialog is displayed
+   * 
    * @throws UnsupportedOperationException
    *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
    *           invocation fails
    */
-  public static void showDialog(Component owner) {
+  public static void showDialog(Component owner) throws UnsupportedOperationException {
 
     try {
       Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show", Component.class).invoke(null, owner);
