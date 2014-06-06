@@ -17,6 +17,7 @@
 
 package jatoo.proxy.dialog;
 
+import jatoo.proxy.Proxy;
 import jatoo.proxy.ProxyUtils;
 
 import java.awt.BorderLayout;
@@ -24,55 +25,35 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.security.GeneralSecurityException;
-import java.security.Key;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.ServiceLoader;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Helper class to ease the internet proxy configuration through a
+ * Helper class to ease the Internet proxy configuration through a
  * {@link JDialog}.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 2.0, June 4, 2014
+ * @version 2.1, June 6, 2014
  */
 public class ProxyDialog {
 
   /** the logger */
   private static final Log logger = LogFactory.getLog(ProxyDialog.class);
-
-  /**
-   * The file that will store the proxy properties.
-   */
-  private static final File FILE_PROXY_PROPERTIES = new File(new File(new File(System.getProperty("user.home")), ".jatoo"), "proxy.properties");
-
-  static {
-    FILE_PROXY_PROPERTIES.getParentFile().mkdirs();
-  }
 
   /**
    * Panel factory loaded through {@link ServiceLoader}.
@@ -128,15 +109,15 @@ public class ProxyDialog {
 
     try {
 
-      Properties p = new Properties();
-      p.loadFromXML(new FileInputStream(FILE_PROXY_PROPERTIES));
+      Proxy proxy = new Proxy();
+      proxy.load();
 
-      dialogPanel.setProxyEnabled(Boolean.parseBoolean(p.getProperty("enabled", "true")));
-      dialogPanel.setUsername(p.getProperty("username"));
-      dialogPanel.setPassword(decryptString(p.getProperty("password")));
-      dialogPanel.setProxyRequiringAuthentication(Boolean.parseBoolean(p.getProperty("authentication", "true")));
-      dialogPanel.setHost(p.getProperty("host"));
-      dialogPanel.setPort(Integer.parseInt(p.getProperty("port")));
+      dialogPanel.setProxyEnabled(proxy.isEnabled());
+      dialogPanel.setHost(proxy.getHost());
+      dialogPanel.setPort(proxy.getPort());
+      dialogPanel.setProxyRequiringAuthentication(proxy.isRequiringAuthentication());
+      dialogPanel.setUsername(proxy.getUsername());
+      dialogPanel.setPassword(proxy.getPassword());
     }
 
     catch (FileNotFoundException e) {
@@ -179,16 +160,16 @@ public class ProxyDialog {
 
         try {
 
-          Properties p = new Properties();
+          Proxy proxy = new Proxy();
 
-          p.setProperty("enabled", Boolean.toString(dialogPanel.isProxyEnabled()));
-          p.setProperty("username", dialogPanel.getUsername());
-          p.setProperty("password", encryptString(dialogPanel.getPassword()));
-          p.setProperty("authentication", Boolean.toString(dialogPanel.isProxyRequiringAuthentication()));
-          p.setProperty("host", dialogPanel.getHost());
-          p.setProperty("port", Integer.toString(dialogPanel.getPort()));
+          proxy.setEnabled(dialogPanel.isProxyEnabled());
+          proxy.setUsername(dialogPanel.getUsername());
+          proxy.setPassword(dialogPanel.getPassword());
+          proxy.setRequiringAuthentication(dialogPanel.isProxyRequiringAuthentication());
+          proxy.setHost(dialogPanel.getHost());
+          proxy.setPort(dialogPanel.getPort());
 
-          p.storeToXML(new FileOutputStream(FILE_PROXY_PROPERTIES), null);
+          proxy.store();
         }
 
         catch (Exception e) {
@@ -235,44 +216,6 @@ public class ProxyDialog {
     // and show
 
     dialog.setVisible(true);
-  }
-
-  /**
-   * Encrypts the specified string using {@link #FILE_PROXY_PROPERTIES} name as
-   * pass code.
-   */
-  private static String encryptString(String string) throws GeneralSecurityException, UnsupportedEncodingException {
-
-    MessageDigest digest = MessageDigest.getInstance("SHA");
-    digest.update(FILE_PROXY_PROPERTIES.getName().getBytes());
-
-    Key key = new SecretKeySpec(digest.digest(), 0, 16, "AES");
-
-    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-    cipher.init(Cipher.ENCRYPT_MODE, key);
-
-    byte[] encryptedData = cipher.doFinal(string.getBytes("UTF-8"));
-
-    return DatatypeConverter.printBase64Binary(encryptedData);
-  }
-
-  /**
-   * Decrypts the specified string using {@link #FILE_PROXY_PROPERTIES} name as
-   * pass code.
-   */
-  private static String decryptString(String string) throws GeneralSecurityException, UnsupportedEncodingException {
-
-    MessageDigest digest = MessageDigest.getInstance("SHA");
-    digest.update(FILE_PROXY_PROPERTIES.getName().getBytes());
-
-    Key key = new SecretKeySpec(digest.digest(), 0, 16, "AES");
-
-    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-    cipher.init(Cipher.DECRYPT_MODE, key);
-
-    byte[] decryptedData = cipher.doFinal(DatatypeConverter.parseBase64Binary(string));
-
-    return new String(decryptedData, "UTF-8");
   }
 
 }
