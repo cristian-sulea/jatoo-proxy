@@ -28,7 +28,7 @@ import java.security.GeneralSecurityException;
  * A collection of utility methods to ease the work with proxies.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 5.2, June 10, 2014
+ * @version 6.0, June 10, 2014
  */
 public final class ProxyUtils {
 
@@ -250,7 +250,7 @@ public final class ProxyUtils {
    *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
    *           invocation fails
    */
-  public static void showDialog() throws UnsupportedOperationException {
+  public static void showProxyDialog() throws UnsupportedOperationException {
 
     try {
       Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show").invoke(null);
@@ -277,7 +277,7 @@ public final class ProxyUtils {
    *           if <code>jatoo-proxy-dialog</code> is not in classpath or if the
    *           invocation fails
    */
-  public static void showDialog(final Component owner) throws UnsupportedOperationException {
+  public static void showProxyDialog(final Component owner) throws UnsupportedOperationException {
 
     try {
       Class.forName("jatoo.proxy.dialog.ProxyDialog").getMethod("show", Component.class).invoke(null, owner);

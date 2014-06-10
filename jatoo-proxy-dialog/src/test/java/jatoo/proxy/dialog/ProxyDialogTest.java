@@ -35,7 +35,7 @@ import javax.swing.UIManager;
  * {@link ProxyDialog} test class.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 3.1, June 4, 2014
+ * @version 3.2, June 10, 2014
  */
 public class ProxyDialogTest {
 
@@ -49,7 +49,7 @@ public class ProxyDialogTest {
     final JButton proxyButton = new JButton("Proxy Settings");
     proxyButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent ev) {
-        ProxyUtils.showDialog(proxyButton);
+        ProxyUtils.showProxyDialog(proxyButton);
       }
     });
 
@@ -86,7 +86,7 @@ public class ProxyDialogTest {
 
     frame.setVisible(true);
 
-    ProxyUtils.showDialog(proxyButton);
+    ProxyUtils.showProxyDialog(proxyButton);
   }
 
 }

@@ -26,7 +26,7 @@ import javax.swing.UIManager;
  * {@link ProxyDialog} test class.
  * 
  * @author <a href="http://cristian.sulea.net" rel="author">Cristian Sulea</a>
- * @version 2.1, June 4, 2014
+ * @version 2.2, June 10, 2014
  */
 public class MigLayoutProxyDialogTest {
 
@@ -34,7 +34,7 @@ public class MigLayoutProxyDialogTest {
     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
     // ProxyDialog.show();
-    ProxyUtils.showDialog();
+    ProxyUtils.showProxyDialog();
   }
 
 }
