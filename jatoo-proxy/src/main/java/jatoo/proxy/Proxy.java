@@ -42,11 +42,13 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class Proxy {
 
+  /** The default value for the store file. */
   private static final File STORE_FILE = new File(new File(new File(System.getProperty("user.home")), ".jatoo"), "proxy.properties");
   static {
     STORE_FILE.getParentFile().mkdirs();
   }
 
+  /** The keys of the properties. */
   private static final String STORE_FILE_ENABLED = "enabled";
   private static final String STORE_FILE_HOST = "host";
   private static final String STORE_FILE_PORT = "port";
@@ -54,6 +56,7 @@ public class Proxy {
   private static final String STORE_FILE_USERNAME = "username";
   private static final String STORE_FILE_PASSWORD = "password";
 
+  /** The properties for the encryption/decryption configuration. */
   private static final String CRYPTO_DIGEST_ALGORITHM = "SHA";
   private static final byte[] CRYPTO_DIGEST_UPDATE_INPUT = STORE_FILE.getName().getBytes();
   private static final String CRYPTO_KEY_ALGORITHM = "AES";
@@ -61,17 +64,48 @@ public class Proxy {
   private static final String CRYPTO_CIPHER_TRANSFORMATION = "AES/ECB/PKCS5Padding";
   private static final String CRYPTO_CHARSET = "UTF-8";
 
+  /** The file where this BO will be stored. */
   private File storeFile = STORE_FILE;
 
+  /** <code>True</code> if the proxy should be enabled. */
   private boolean enabled;
+
+  /** The host name, or address, of the proxy server. */
   private String host;
+
+  /** The port number of the proxy server. */
   private int port;
+
+  /** <code>True</code> if the server requires authentication. */
   private boolean requiringAuthentication;
+
+  /** The user name for the proxy server. */
   private String username;
+
+  /** The user's password for the proxy server. */
   private String password;
 
+  /**
+   * Creates an empty proxy BO.
+   */
   public Proxy() {}
 
+  /**
+   * Creates a new proxy BO with default values for all properties.
+   * 
+   * @param enabled
+   *          <code>true</code> if the proxy should be enabled
+   * @param host
+   *          the host name, or address, of the proxy server
+   * @param port
+   *          the port number of the proxy server
+   * @param requiringAuthentication
+   *          <code>true</code> if the server requires authentication
+   * @param username
+   *          the user name
+   * @param password
+   *          the user's password
+   */
   public Proxy(final boolean enabled, final String host, final int port, final boolean requiringAuthentication, final String username, final String password) {
     this.enabled = enabled;
     this.host = host;
@@ -81,10 +115,34 @@ public class Proxy {
     this.password = password;
   }
 
+  /**
+   * Creates a new proxy BO with default values for all properties. The proxy is
+   * enabled (using the provided host and port) and requires authentication
+   * (using the provided user name and password).
+   * 
+   * @param host
+   *          the host name, or address, of the proxy server
+   * @param port
+   *          the port number of the proxy server
+   * @param username
+   *          the user name
+   * @param password
+   *          the user's password
+   */
   public Proxy(final String host, final int port, final String username, final String password) {
     this(true, host, port, true, username, password);
   }
 
+  /**
+   * Creates a new proxy BO with default values for all properties. The proxy is
+   * enabled (using the provided host and port) and does NOT requires
+   * authentication.
+   * 
+   * @param host
+   *          the host name, or address, of the proxy server
+   * @param port
+   *          the port number of the proxy server
+   */
   public Proxy(final String host, final int port) {
     this(true, host, port, false, null, null);
   }
