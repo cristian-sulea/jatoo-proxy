@@ -18,3 +18,20 @@ Usage
 ProxyUtils.setProxy(host, port, username, password);
 +--
 
+	The proxy configuration can be stored (with password encrypted) for later use, even in other applications:
+
++--
+ProxyUtils.setAndStoreProxy(host, port, username, password);
++--
+
+	A previously stored proxy can be reused anywhere in the code, even in different applications:
+
++--
+ProxyUtils.setStoredProxy();
++--
+
+	To proxy can be set (and stored) at runtime, with a dialog component (if <<jatoo-project-dialog>> implementation is in the classpath): 
+
++--
+ProxyUtils.showProxyDialog();
++--
