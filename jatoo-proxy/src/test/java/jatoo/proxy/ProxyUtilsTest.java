@@ -53,7 +53,7 @@ public class ProxyUtilsTest {
     ProxyUtils.setAndStoreProxy("192.168.1.29", 8080, "csu", new String(new byte[] { 48, 48, 55, 46, 99, 115, 117, 46, 116, 53, 51, 48 }));
     ProxyUtils.removeProxy();
 
-    ProxyUtils.setLastStoredProxy();
+    ProxyUtils.setStoredProxy();
 
     checkConnection();
   }

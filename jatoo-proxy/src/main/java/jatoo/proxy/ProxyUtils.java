@@ -145,7 +145,7 @@ public final class ProxyUtils {
   /**
    * Configures the proxy with the provided host, port, username and password.
    * The provided data is stored into a file for later use (for example with the
-   * method {@link #setLastStoredProxy()}).
+   * method {@link #setStoredProxy()}).
    * 
    * @param host
    *          the host name, or address, of the proxy server
@@ -169,7 +169,7 @@ public final class ProxyUtils {
   /**
    * Configures the proxy with the provided host, port, username and password.
    * The provided data is stored into a file for later use (for example with the
-   * method {@link #setLastStoredProxy()}).
+   * method {@link #setStoredProxy()}).
    * 
    * @param host
    *          the host name, or address, of the proxy server
@@ -197,7 +197,7 @@ public final class ProxyUtils {
    * @throws IOException
    *           if reading from the store file fails
    */
-  public static void setLastStoredProxy() throws GeneralSecurityException, IOException {
+  public static void setStoredProxy() throws GeneralSecurityException, IOException {
 
     Proxy proxy = new Proxy();
     proxy.load();
